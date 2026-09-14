@@ -1,0 +1,41 @@
+:root {
+  --azul-principal: #3b6ea5;
+  --azul-oscuro: #2c5282;
+  --azul-claro: #eaf1f8;
+  --gris-fondo: #f4f5f7;
+  --gris-borde: #d9dde3;
+  --gris-texto: #4a5568;
+}
+
+body {
+  background-color: var(--gris-fondo);
+  color: #2d2d2d;
+}
+
+.btn-primary {
+  background-color: var(--azul-principal);
+  border-color: var(--azul-principal);
+}
+.btn-primary:hover {
+  background-color: var(--azul-oscuro);
+  border-color: var(--azul-oscuro);
+}
+.btn-outline-primary {
+  color: var(--azul-principal);
+  border-color: var(--azul-principal);
+}
+.btn-outline-primary:hover {
+  background-color: var(--azul-principal);
+  border-color: var(--azul-principal);
+  color: #fff;
+}
+
+.card {
+  border: 1px solid var(--gris-borde);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.table thead {
+  background-color: var(--azul-claro);
+  color: var(--azul-oscuro);
+}

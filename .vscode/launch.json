@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-InventarioApplication<inventario>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "proyecto.inventario.InventarioApplication",
+            "projectName": "inventario",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=59398 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=inventario"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ProyectoApplication<proyecto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "compra.proyecto.ProyectoApplication",
+            "projectName": "proyecto",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-UsuarioApplication<usuario>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "proyecto.usuario.UsuarioApplication",
+            "projectName": "usuario",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ProyectoApplication<proyecto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "compra.compra.ProyectoApplication",
+            "projectName": "proyecto",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

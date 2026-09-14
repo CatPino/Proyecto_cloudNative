@@ -1,0 +1,50 @@
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.carrito-wrapper {
+  position: relative;
+}
+
+.carrito-dropdown {
+  position: absolute;
+  right: 0;
+  top: 2.5rem;
+  background: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 260px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.carrito-dropdown h3 {
+  margin-top: 0;
+}
+
+.carrito-dropdown ul {
+  padding-left: 1rem;
+}
+
+.carrito-dropdown li button {
+  margin-left: 0.5rem;
+}
