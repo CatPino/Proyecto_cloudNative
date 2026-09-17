@@ -4,7 +4,7 @@ import Navbar from "./components/navbar/navbar";
 import Home from "./pages/home/home";
 import Inventario from "./pages/inventario/inventario";
 import Compra from "./pages/compra/compra";
-import Usuario from "./pages/Usuario/usuario";
+import Usuario from "./pages/usuario/usuario";
 
 function App() {
   return (
