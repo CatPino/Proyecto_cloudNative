@@ -5,6 +5,7 @@ import compra.compra.service.compraService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,16 +35,19 @@ public class controller {
     }
  
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_access_ad_user')")
     public ResponseEntity<compra> crear(@RequestBody compra compra) {
         return ResponseEntity.status(HttpStatus.CREATED).body(compraService.crear(compra));
     }
  
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_access_ad_user')")
     public ResponseEntity<compra> actualizar(@PathVariable Long id, @RequestBody compra compra) {
         return ResponseEntity.ok(compraService.actualizar(id, compra));
     }
  
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_access_ad_user')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         compraService.eliminar(id);
         return ResponseEntity.noContent().build();
