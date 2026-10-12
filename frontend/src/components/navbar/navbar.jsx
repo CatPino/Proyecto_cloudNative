@@ -16,6 +16,7 @@ function Navbar() {
         <Link to="/inventario">Inventario</Link>
         <Link to="/compra">Compras</Link>
         <Link to="/usuario">Usuarios</Link>
+        <Link to="/eventos">Eventos</Link>
       </div>
 
       <div className="navbar-right">

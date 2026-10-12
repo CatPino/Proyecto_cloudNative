@@ -5,6 +5,7 @@ import Home from "./pages/home/home";
 import Inventario from "./pages/inventario/inventario";
 import Compra from "./pages/compra/compra";
 import Usuario from "./pages/usuario/usuario";
+import Eventos from "./pages/eventos/eventos";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/inventario" element={<Inventario />} />
             <Route path="/compra" element={<Compra />} />
             <Route path="/usuario" element={<Usuario />} />
+            <Route path="/eventos" element={<Eventos />} />
           </Routes>
         </div>
       </BrowserRouter>
