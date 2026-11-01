@@ -1,6 +1,9 @@
 package compra.compra.controller;
 
 import compra.compra.config.RabbitConfig;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -27,35 +30,40 @@ public class EventoController {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public record EventoRequest(String routingKey, String mensaje) {}
+    // El mensaje puede venir vacío a propósito: así se prueba el rechazo del consumidor hacia la DLQ.
+    public record EventoRequest(
+            @NotBlank(message = "routingKey es obligatoria") String routingKey,
+            @Size(max = 500, message = "mensaje no puede superar 500 caracteres") String mensaje) {}
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> publicar(@RequestBody EventoRequest request) {
-        if (request.routingKey() == null || !ROUTING_KEYS_PERMITIDAS.contains(request.routingKey())) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Routing key no permitida: " + request.routingKey()));
+    public ResponseEntity<Map<String, Object>> publicar(@Valid @RequestBody EventoRequest request) {
+        if (!ROUTING_KEYS_PERMITIDAS.contains(request.routingKey())) {
+            log.warn("[COMPRA] Routing key no permitida: '{}'", request.routingKey());
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", "routingKey no permitida",
+                    "permitidas", ROUTING_KEYS_PERMITIDAS));
         }
 
-        rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE, request.routingKey(), request.mensaje());
-        log.info("[COMPRA] Evento publicado con routing key '{}': {}", request.routingKey(), request.mensaje());
+        String mensaje = request.mensaje() == null ? "" : request.mensaje();
+        rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE, request.routingKey(), mensaje);
+        log.info("[COMPRA] Evento publicado con routing key '{}': {}", request.routingKey(), mensaje);
 
         return ResponseEntity.ok(Map.of("estado", "enviado", "routingKey", request.routingKey()));
     }
 
-  // ========== NUEVO ENDPOINT DE MÉTRICAS / DLQ ==========
+    // ========== ENDPOINT DE MÉTRICAS / ALERTA DE LA DLQ ==========
     @GetMapping("/metrics")
     public ResponseEntity<Map<String, Object>> metrics() {
         // Consulta la cantidad de mensajes en la DLQ directamente al canal de RabbitMQ
         Long dlqReady = rabbitTemplate.execute(channel -> channel.messageCount(RabbitConfig.DLQ_QUEUE));
-        
+
         long cantidadDlq = dlqReady != null ? dlqReady : 0;
         boolean hayAlerta = cantidadDlq > 0;
-        
+
         log.info("[MÉTRICAS] Consulta de DLQ: {} mensajes en cuarentena. Alerta: {}", cantidadDlq, hayAlerta);
 
         return ResponseEntity.ok(Map.of(
-            "dlqReady", cantidadDlq,
-            "alert", hayAlerta
-        ));
+                "dlqReady", cantidadDlq,
+                "alert", hayAlerta));
     }
 }
