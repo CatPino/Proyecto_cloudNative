@@ -2,6 +2,7 @@ package compra.compra.service;
 
 
 import compra.compra.entities.compra;
+import compra.compra.messaging.KafkaCompraProducer;
 import compra.compra.repositories.compraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.List;
 public class compraService {
  
     private final compraRepository compraRepository;
+    private final KafkaCompraProducer kafkaCompraProducer;
  
     public List<compra> listarTodas() {
         return compraRepository.findAll();
@@ -24,7 +26,9 @@ public class compraService {
     }
  
     public compra crear(compra compra) {
-        return compraRepository.save(compra);
+        compra guardada = compraRepository.save(compra);
+        kafkaCompraProducer.publicarCompraCreada(guardada, "CRUD_COMPRA");
+        return guardada;
     }
  
     public compra actualizar(Long id, compra datosActualizados) {
@@ -37,7 +41,9 @@ public class compraService {
     }
  
     public void eliminar(Long id) {
-        compraRepository.delete(buscarPorId(id));
+        compra existente = buscarPorId(id);
+        compraRepository.delete(existente);
+        kafkaCompraProducer.publicarCompraCancelada(existente, "CRUD_COMPRA");
     }
 }
  

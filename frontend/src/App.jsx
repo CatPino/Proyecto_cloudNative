@@ -6,6 +6,7 @@ import Inventario from "./pages/inventario/inventario";
 import Compra from "./pages/compra/compra";
 import Usuario from "./pages/usuario/usuario";
 import Eventos from "./pages/eventos/eventos";
+import Streaming from "./pages/streaming/streaming";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/compra" element={<Compra />} />
             <Route path="/usuario" element={<Usuario />} />
             <Route path="/eventos" element={<Eventos />} />
+            <Route path="/streaming" element={<Streaming />} />
           </Routes>
         </div>
       </BrowserRouter>
