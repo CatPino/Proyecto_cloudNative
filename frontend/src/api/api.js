@@ -14,6 +14,10 @@ export const usuarioApi = axios.create({
   baseURL: import.meta.env.VITE_USUARIO_URL || "http://localhost:8083/api/usuarios",
 });
 
+export const rabbitmqAdminApi = axios.create({
+  baseURL: import.meta.env.VITE_RABBITMQ_ADMIN_URL || "http://localhost:8084/api/rabbitmq-admin",
+});
+
 async function getAccessToken(scopes = [import.meta.env.VITE_API_SCOPE]) {
   try {
     const accounts = msalInstance.getAllAccounts();
@@ -47,3 +51,4 @@ const attachAuthInterceptor = (apiInstance, scopes) => {
 attachAuthInterceptor(inventarioApi, [import.meta.env.VITE_API_SCOPE]);
 attachAuthInterceptor(compraApi, [import.meta.env.VITE_API_SCOPE]);
 attachAuthInterceptor(usuarioApi, [import.meta.env.VITE_API_SCOPE]);
+attachAuthInterceptor(rabbitmqAdminApi, [import.meta.env.VITE_API_SCOPE]);

@@ -7,6 +7,7 @@ import Compra from "./pages/compra/compra";
 import Usuario from "./pages/usuario/usuario";
 import Eventos from "./pages/eventos/eventos";
 import Streaming from "./pages/streaming/streaming";
+import RabbitMqAdmin from "./pages/rabbitmqAdmin/rabbitmqAdmin";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/usuario" element={<Usuario />} />
             <Route path="/eventos" element={<Eventos />} />
             <Route path="/streaming" element={<Streaming />} />
+            <Route path="/rabbitmq-admin" element={<RabbitMqAdmin />} />
           </Routes>
         </div>
       </BrowserRouter>

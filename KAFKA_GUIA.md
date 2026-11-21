@@ -22,7 +22,7 @@ Accesos web:
 ## 2. Arquitectura y Casos de Uso
 
 ### Complementariedad RabbitMQ vs. Kafka
-- **RabbitMQ (intacto):** Mensajería transaccional y manejo de fallos (`tienda.exchange` -> `inventario.queue` / `auditoria.queue` -> reintentos con backoff -> `tienda.dlq`).
+- **RabbitMQ (intacto + administrado con `AmqpAdmin`):** Mensajería transaccional y manejo de fallos (`tienda.exchange` [direct] + `tienda.topic.exchange` [topic] -> `inventario.queue` / `auditoria.queue` / `notificaciones.queue` -> reintentos con backoff -> DLQs), administrada dinámicamente por el microservicio **`rabbitmq-admin` (puerto `8084`)** usando `org.springframework.amqp.core.AmqpAdmin`.
 - **Apache Kafka:** Event streaming y analítica en tiempo real con log distribuido, retención configurable y múltiples **consumer groups** independientes.
 
 ### Tópicos creados automáticamente (3 particiones, 3 réplicas, `min.insync.replicas=2`)
